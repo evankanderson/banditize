@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Go binary built manually and stuffed in a container like a heathen\
+banditize
+
 # Distribution / packaging
 .Python
 build/

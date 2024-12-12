@@ -18,3 +18,15 @@ In turn, this currently returns a single field, but we may expand it later:
 {
     "simpleFindings": "... bandit output ..."
 }
+
+## Deployment
+
+This has been built (on a Mac) using:
+
+```shell
+GOOS=linux GOARCH=amd64 go build . && docker build --platform linux/amd64 . -t us-east4-docker.pkg.dev/minder-zoo/banditize/banditize@sha256:latest
+```
+
+And then deployed on Cloud Run at the following URL:
+
+https://banditize-562949304223.us-central1.run.app/
