@@ -19,14 +19,16 @@ In turn, this currently returns a single field, but we may expand it later:
     "simpleFindings": "... bandit output ..."
 }
 
-## Deployment
+## Usage
 
-This has been built (on a Mac) using:
+To test on the command line in a python directory, you can do the following:
 
-```shell
-GOOS=linux GOARCH=amd64 go build . && docker build --platform linux/amd64 . -t us-east4-docker.pkg.dev/minder-zoo/banditize/banditize@sha256:latest
+```
+curl --data @<(echo "{\"head\":\"$(tar -czf - . | base64 -i -)\"}") http://localhost:7777/pull
 ```
 
-And then deployed on Cloud Run at the following URL:
+## Deployment
+
+This is also deployed on Google Cloud Run at the following URL via CI:
 
 https://banditize-562949304223.us-central1.run.app/

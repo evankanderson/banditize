@@ -43,6 +43,10 @@ func handlePull(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Unable to read body: %s", err), http.StatusBadRequest)
 		return
 	}
+	if req.Head == "" {
+		http.Error(w, "head cannot be empty", http.StatusBadRequest)
+		return
+	}
 	fmt.Printf("Attempting to analyze...\n")
 
 	// Create temp directories
@@ -167,5 +171,7 @@ func unpackTarball(encoded string, dir string) error {
 
 func main() {
 	http.HandleFunc("/pull", handlePull)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := cmp.Or(os.Getenv("PORT"), "8080")
+	log.Printf("Listening on port %s\n", port)
+	log.Fatal(http.ListenAndServe(":" + port, nil))
 }
